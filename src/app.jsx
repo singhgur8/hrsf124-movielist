@@ -6,40 +6,65 @@ class App extends React.Component{
     super(props);
     this.state = {
       movielist: [],
-      DB:  [ //this is here just for now while I dont have a DB
-        {title: 'Mean Girls'},
-        {title: 'Hackers'},
-        {title: 'The Grey'},
-        {title: 'Sunshine'},
-        {title: 'Ex Machina'},
-      ]
+      DB:  [ 
+        //this is here just for now while I dont have a DB. NOW DB is empty. 
+      ],
+      watchedMovies: [] //list of movies...movies in this list should have css. green watched button
     };
   }
 //THIS is hte client so make all of your request froms here
 //USE AXIOS
 
-//need component did mount
+
 componentDidMount() {
-this.setState({
-  movielist: this.state.DB //eventually want to grab from mysql
-})
+  this.setState({
+    movielist: this.state.DB //eventually want to grab from mysql
+  })
 }
 
-handleSubmit (event){
-  console.log(this)
+goHandleSubmit (event){ //search through movies
+  
   event.preventDefault();
   //get the values of the input
-  var input = document.getElementById('input').value;
-  var movielist = [];
-  for (var i =0; i<this.state.movielist.length; i++) {
-    if (this.state.movielist[i].title === input) {
-      movielist.push(this.state.movielist[i]);
+  var input = document.getElementById('inputGo').value;
+  var localMovieList = [];
+  for (var i =0; i<this.state.DB.length; i++) {
+    //also can make it so its no case sensitive
+    if (this.state.DB[i].title.indexOf(input) !== -1) { //adjust this so it only looks for keyword in the data base...
+      localMovieList.push(this.state.DB[i]);
     }
   }
 
-  console.log(movielist)
+  if (localMovieList.length !== 0){
+    this.setState({
+      movielist: localMovieList 
+    })
+  } else {
+    this.setState({
+      movielist: this.state.DB //eventually want to grab from mysql
+    })
+  }
 
 }
+
+addHandleSubmit (event){ //add moviees
+  
+  event.preventDefault();
+  //get the values of the input
+  var input = document.getElementById('inputAdd').value;
+  var movieObj = {title: input};
+  var moviesArr = this.state.movielist;
+  moviesArr.push(movieObj);
+  
+  this.setState({
+    movielist: moviesArr,
+    DB: moviesArr //delte later
+  })
+ 
+ 
+
+}
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,12 +78,21 @@ handleSubmit (event){
 render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit.bind(this)}>
+        
+        <form onSubmit={this.addHandleSubmit.bind(this)}>
         <label>
-          <input type="text" name="name" placeholder="Search..." id='input'/>
+          <input type="text" name="name" placeholder="Search..." id='inputAdd'/>
+          </label>
+          <input type="submit" value="Add"/>
+        </form>
+
+        <form onSubmit={this.goHandleSubmit.bind(this)}>
+        <label>
+          <input type="text" name="name" placeholder="Search..." id='inputGo'/>
           </label>
           <input type="submit" value="Go!"/>
         </form>
+
         <MovieList movies = {this.state.movielist}/>
       </div> 
     )

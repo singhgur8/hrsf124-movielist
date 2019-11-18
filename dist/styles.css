@@ -12,6 +12,11 @@ form {
     text-align: center;
 }
 
+button {
+    /* background-color: green;  */
+    /* make green only if the movie is watvhed */
+}
+
 li {
     background-color: gray;
     text-align: left;
