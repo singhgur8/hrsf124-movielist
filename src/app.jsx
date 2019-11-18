@@ -6,7 +6,7 @@ class App extends React.Component{
     super(props);
     this.state = {
       movielist: [],
-      DB =  [
+      DB:  [ //this is here just for now while I dont have a DB
         {title: 'Mean Girls'},
         {title: 'Hackers'},
         {title: 'The Grey'},
@@ -18,12 +18,12 @@ class App extends React.Component{
 //THIS is hte client so make all of your request froms here
 //USE AXIOS
 
-
-// componentDidMount() {
-//   this.setState({
-//     movielist: this.state.DB
-//   })
-// }
+//need component did mount
+componentDidMount() {
+this.setState({
+  movielist: this.state.DB //eventually want to grab from mysql
+})
+}
 
 handleSubmit (event){
   console.log(this)
