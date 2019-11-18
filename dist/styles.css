@@ -1,0 +1,23 @@
+body {
+    color: black;
+    align-content: center;
+    padding-left: 100px;
+    padding-right: 100px;
+    font-size: 30px;
+}
+
+form {
+    font-size: 20px;
+    position: relative;
+    text-align: center;
+}
+
+li {
+    background-color: gray;
+    text-align: left;
+    border-width: 2px; 
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-style: solid; 
+    border-color: black;
+}
